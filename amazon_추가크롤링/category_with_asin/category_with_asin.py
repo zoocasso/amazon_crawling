@@ -23,6 +23,15 @@ options = Options()
 driver = webdriver.Firefox(options=options,executable_path="./geckodriver.exe")
 driver.set_window_size(1920, 1080)
 
+driver.get(URL_ADDRESS)
+time.sleep(1)
+driver.find_element("id","nav-global-location-popover-link").click()
+time.sleep(1)
+
+driver.find_element("id","GLUXZipUpdateInput").send_keys("98101")
+driver.find_element("id","GLUXZipUpdate").click()
+time.sleep(1)
+
 """
     zip코드 입력하는 함수
 """
@@ -40,9 +49,9 @@ time.sleep(1)
     URL별 크롤링
 """ 
 for url in URL_LIST:
+    print(url)
     db = pymysql.connect(host='172.30.1.51', user='root', password='vision9551', db='kisti_crawl', charset='utf8')
     cursor = db.cursor()
-    print(url)
     asin_list = list()
     product_idx = 1
     URL_SUFFIX = url.split("https://www.amazon.com/")[1]
