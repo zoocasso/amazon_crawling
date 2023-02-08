@@ -1,0 +1,36 @@
+1675670886474	geckodriver	INFO	Listening on 127.0.0.1:49613
+1675670889514	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "49614" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\pc-2\\AppData\\Local\\Temp\\rust_mozprofilexQH0EI"
+1675670889751	Marionette	INFO	Marionette enabled
+1675670889754	Marionette	INFO	Listening on port 49624
+WebDriver BiDi listening on ws://127.0.0.1:49614
+Read port: 49624
+1675670889938	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\pc-2\\AppData\\Local\\Temp\\rust_mozprofilexQH0EI\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:49614/devtools/browser/ea67f789-502c-4562-a67a-e727378de3e7
+JavaScript error: resource://gre/modules/URIFixup.sys.mjs, line 302: NS_ERROR_FAILURE: Should pass a non-null uri
+JavaScript warning: https://www.amazon.com/ line 1895 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://www.amazon.com/Best-Sellers-Arts-Crafts-Sewing-Art-Mat-Cutters-Blades/zgbs/arts-crafts/12896611/ref=zg_bs_nav_arts-crafts_3_12896921 line 2515 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function
+JavaScript warning: https://www.amazon.com//Best-Sellers-Arts-Crafts-Sewing-Art-Mat-Cutters-Blades/zgbs/arts-crafts/12896611/ref=zg_bs_pg_2?_encoding=UTF8&pg=2 line 2504 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function
+JavaScript warning: https://www.amazon.com//dp/B07KYWLVCQ line 11102 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1675671021782	geckodriver	INFO	Listening on 127.0.0.1:49813
+1675671024844	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "49814" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\pc-2\\AppData\\Local\\Temp\\rust_mozprofileHFpUti"
+1675671025016	Marionette	INFO	Marionette enabled
+1675671025019	Marionette	INFO	Listening on port 49823
+Read port: 49823
+WebDriver BiDi listening on ws://127.0.0.1:49814
+1675671025084	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\pc-2\\AppData\\Local\\Temp\\rust_mozprofileHFpUti\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:49814/devtools/browser/eb97e716-8138-48de-a3c4-48bf18f4b934
+JavaScript error: resource://gre/modules/URIFixup.sys.mjs, line 302: NS_ERROR_FAILURE: Should pass a non-null uri
+JavaScript warning: https://www.amazon.com/ line 1897 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://m.media-amazon.com/images/I/81DwFuGYzRL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function
+JavaScript warning: https://www.amazon.com/Best-Sellers-Arts-Crafts-Sewing-Art-Mat-Cutters-Blades/zgbs/arts-crafts/12896611/ref=zg_bs_nav_arts-crafts_3_12896921 line 2517 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://www.amazon.com//Best-Sellers-Arts-Crafts-Sewing-Art-Mat-Cutters-Blades/zgbs/arts-crafts/12896611/ref=zg_bs_pg_2?_encoding=UTF8&pg=2 line 2506 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function
+JavaScript error: https://m.media-amazon.com/images/I/51SrwqaWgEL.js?AUIClients/CardJsRuntimeBuzzCopyBuild, line 32: TypeError: b.cardModuleFactory is not a function

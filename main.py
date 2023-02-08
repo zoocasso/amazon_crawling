@@ -12,7 +12,7 @@ db_connection_str = 'mysql+pymysql://root:vision9551@172.30.1.51/temp'
 db_connection = create_engine(db_connection_str)
 conn = db_connection.connect()
 
-db = pymysql.connect(host='172.30.1.51', user='root', password='vision9551', db='temp', charset='utf8')
+db = pymysql.connect(host='172.30.1.51', user='root', password='vision9551', db='kisti_crawl', charset='utf8')
 cursor = db.cursor()
 
 create_date = str(datetime.now()).split(' ')[0].strip()
@@ -270,7 +270,7 @@ def goToDetailPage(url,asin,product_order,product_detail,product_feature,product
     # 사이트 스크롤해서 html 불러오기
     for i in [10,5,10/3,10/4,2,10/6,10/7,10/8,10/9,1]: # 페이지 10등분
         driver.execute_script(f"window.scrollTo(0,document.body.scrollHeight/{i})")
-        time.sleep(0.5)
+        time.sleep(1)
 
     # BeautifulSoup
     page_source = driver.page_source
@@ -417,7 +417,7 @@ if __name__ =='__main__':
                 driver.refresh()
 
             driver.implicitly_wait(10)
-            time.sleep(0.5)
+            time.sleep(1)
             product_detail = dict()
             product_feature =dict()
             product_info = dict()
