@@ -3,18 +3,13 @@ from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup
 from datetime import datetime
 import pandas as pd
-import MySQLdb
+import pymysql
 import time
 import os
 import re
 
-mydb = MySQLdb.connect(
-    user="root",
-    passwd="vision9551",
-    host="172.30.1.51",
-    db="kisti_crawl",
-)
-cursor = mydb.cursor()
+db = pymysql.connect(host='139.150.82.178', port=3306, user='root', passwd='vision9551', db='kisti_crawl', charset='utf8')
+cursor = db.cursor()
 
 create_date = str(datetime.now()).split(' ')[0].strip()
 
@@ -42,74 +37,89 @@ def insert_db(url,asin,product_order,product_info,product_detail,product_feature
         level_list.append(row[2])
         level_list.append(row[3])
     
-    
-    index_1 = 1
-    for key in product_detail:
-        product_detail_dict = dict()
-        product_detail_dict["product_key"] = asin
-        product_detail_dict["product_idx"] = index_1
-        product_detail_dict["create_date"] = create_date
-        product_detail_dict["title"] = key
-        product_detail_dict["content"] = product_detail[key]
-        # print(product_detail)
-        cursor.execute(f"""INSERT INTO `amz_product_detail` (url,product_key,product_idx,create_date,detail_table_key,detail_table_value) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}","{checkDictValue_str(product_detail_dict,"product_idx")}","{create_date}","{key}","{checkDictValue_str(product_detail,key)}")""")
-        mydb.commit()
-        index_1 += 1
+    try:
+        index_1 = 1
+        for key in product_detail:
+            product_detail_dict = dict()
+            product_detail_dict["product_key"] = asin
+            product_detail_dict["product_idx"] = index_1
+            product_detail_dict["create_date"] = create_date
+            product_detail_dict["title"] = key
+            product_detail_dict["content"] = product_detail[key]
+            # print(product_detail)
+            cursor.execute(f"""INSERT INTO `amz_product_detail` (url,product_key,product_idx,create_date,detail_table_key,detail_table_value) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}","{checkDictValue_str(product_detail_dict,"product_idx")}","{create_date}","{key}","{checkDictValue_str(product_detail,key)}")""")
+            db.commit()
+            index_1 += 1
+    except:
+        pass
+    try:
+        index_2 = 1
+        for key in feature_rating:
+            feature_rating_dict = dict()
+            feature_rating_dict["product_key"] = asin
+            feature_rating_dict["product_idx"] = index_2
+            feature_rating_dict["create_date"] = create_date
+            feature_rating_dict["title"] = key
+            feature_rating_dict["rating"] = feature_rating[key]
+            # print(feature_rating_dict)
+            cursor.execute(f"""INSERT INTO `amz_feature_rating` (url,product_key,product_idx,create_date,feature_title,feature_rating) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}",{checkDictValue_int(feature_rating_dict,"product_idx")},"{create_date}","{checkDictValue_str(feature_rating_dict,"title")}","{checkDictValue_int(feature_rating_dict,"rating")}")""")
+            db.commit()
+            index_2 += 1
+    except:
+        pass
 
-    index_2 = 1
-    for key in feature_rating:
-        feature_rating_dict = dict()
-        feature_rating_dict["product_key"] = asin
-        feature_rating_dict["product_idx"] = index_2
-        feature_rating_dict["create_date"] = create_date
-        feature_rating_dict["title"] = key
-        feature_rating_dict["rating"] = feature_rating[key]
-        # print(feature_rating_dict)
-        cursor.execute(f"""INSERT INTO `amz_feature_rating` (url,product_key,product_idx,create_date,feature_title,feature_rating) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}",{checkDictValue_int(feature_rating_dict,"product_idx")},"{create_date}","{checkDictValue_str(feature_rating_dict,"title")}","{checkDictValue_int(feature_rating_dict,"rating")}")""")
-        mydb.commit()
-        index_2 += 1
+    try:
+        index_3 = 1
+        for key in product_feature:
+            product_feature_dict = dict()
+            product_feature_dict["product_key"] = asin
+            product_feature_dict["product_idx"] = index_3
+            product_feature_dict["create_date"] = create_date
+            product_feature_dict["content"] = product_feature[key]
+            # print(product_feature_dict)
+            cursor.execute(f"""INSERT INTO `amz_product_feature` (url,product_key,product_idx,create_date,feature_list_content) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}",{checkDictValue_int(product_feature_dict,"product_idx")},"{create_date}","{checkDictValue_str(product_feature_dict,"content")}")""")
+            db.commit()
+            index_3 += 1
+    except:
+        pass
 
-    index_3 = 1
-    for key in product_feature:
-        product_feature_dict = dict()
-        product_feature_dict["product_key"] = asin
-        product_feature_dict["product_idx"] = index_3
-        product_feature_dict["create_date"] = create_date
-        product_feature_dict["content"] = product_feature[key]
-        # print(product_feature_dict)
-        cursor.execute(f"""INSERT INTO `amz_product_feature` (url,product_key,product_idx,create_date,feature_list_content) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}",{checkDictValue_int(product_feature_dict,"product_idx")},"{create_date}","{checkDictValue_str(product_feature_dict,"content")}")""")
-        mydb.commit()
-        index_3 += 1
+    try:
+        product_info_dict = dict()
+        product_info_dict = product_info
+        product_info_dict["product_key"] = asin
+        product_info_dict["product_order"] =product_order
+        product_info_dict["create_date"] = create_date
+        # print(product_info_dict)
+        cursor.execute(f"""INSERT INTO `amz_product_info` (url,product_key,product_idx,create_date,level1,level2,level3,level4,product_name,product_price,review_score,review_number,5star,4star,3star,2star,1star) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}","{checkDictValue_str(product_info_dict,"product_order")}","{create_date}","{level_list[0]}","{level_list[1]}","{level_list[2]}","{level_list[3]}","{checkDictValue_str(product_info_dict,"Product_name")}",{checkDictValue_int(product_info_dict,"Product_price")},{checkDictValue_int(product_info_dict,"totalRatingStar")},{checkDictValue_int(product_info_dict,"totalReviewCount")},{checkDictValue_int(product_info_dict,"star5")},{checkDictValue_int(product_info_dict,"star4")},{checkDictValue_int(product_info_dict,"star3")},{checkDictValue_int(product_info_dict,"star2")},{checkDictValue_int(product_info_dict,"star1")})""")
+        db.commit()
+    except:
+        pass
 
+    try:
+        index_4 = 1
+        for key in review_keyword:
+            review_keyword_dict = dict()
+            review_keyword_dict["product_key"] = asin
+            review_keyword_dict["product_idx"] = index_4
+            review_keyword_dict["create_date"] = create_date
+            review_keyword_dict["content"] = review_keyword[key]
+            # print(review_keyword_dict)
+            cursor.execute(f"""INSERT INTO `amz_review_keyword` (url,product_key,product_idx,create_date,keyword) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}",{checkDictValue_int(review_keyword_dict,"product_idx")},"{create_date}","{checkDictValue_str(review_keyword,key)}")""")
+            db.commit()
+            index_4 += 1
+    except:
+        pass
 
-    product_info_dict = dict()
-    product_info_dict = product_info
-    product_info_dict["product_key"] = asin
-    product_info_dict["product_order"] =product_order
-    product_info_dict["create_date"] = create_date
-    # print(product_info_dict)
-    cursor.execute(f"""INSERT INTO `amz_product_info` (url,product_key,product_idx,create_date,level1,level2,level3,level4,product_name,product_price,review_score,review_number,5star,4star,3star,2star,1star) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}","{checkDictValue_str(product_info_dict,"product_order")}","{create_date}","{level_list[0]}","{level_list[1]}","{level_list[2]}","{level_list[3]}","{checkDictValue_str(product_info_dict,"Product_name")}",{checkDictValue_int(product_info_dict,"Product_price")},{checkDictValue_int(product_info_dict,"totalRatingStar")},{checkDictValue_int(product_info_dict,"totalReviewCount")},{checkDictValue_int(product_info_dict,"star5")},{checkDictValue_int(product_info_dict,"star4")},{checkDictValue_int(product_info_dict,"star3")},{checkDictValue_int(product_info_dict,"star2")},{checkDictValue_int(product_info_dict,"star1")})""")
-    mydb.commit()
-
-    index_4 = 1
-    for key in review_keyword:
-        review_keyword_dict = dict()
-        review_keyword_dict["product_key"] = asin
-        review_keyword_dict["product_idx"] = index_4
-        review_keyword_dict["create_date"] = create_date
-        review_keyword_dict["content"] = review_keyword[key]
-        # print(review_keyword_dict)
-        cursor.execute(f"""INSERT INTO `amz_review_keyword` (url,product_key,product_idx,create_date,keyword) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}",{checkDictValue_int(review_keyword_dict,"product_idx")},"{create_date}","{checkDictValue_str(review_keyword,key)}")""")
-        mydb.commit()
-        index_4 += 1
-
-    body_content_dict = dict()
-    body_content_dict["product_key"] = asin
-    body_content_dict["content"] = body_content
-    body_content_dict["create_date"] = create_date
-    # print(body_content_dict["content"])
-    cursor.execute(f"""INSERT INTO `amz_body_content` (url,product_key,create_date,body_content) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}","{create_date}","{checkDictValue_str(body_content_dict,"content")}")""")
-    mydb.commit()
+    try:
+        body_content_dict = dict()
+        body_content_dict["product_key"] = asin
+        body_content_dict["content"] = body_content
+        body_content_dict["create_date"] = create_date
+        # print(body_content_dict["content"])
+        cursor.execute(f"""INSERT INTO `amz_body_content` (url,product_key,create_date,body_content) VALUES("{url}","{checkDictValue_str(product_detail,"ASIN")}","{create_date}","{checkDictValue_str(body_content_dict,"content")}")""")
+        db.commit()
+    except:
+        pass
     
 # 폴더 생성 함수
 def createFolder(directory):
@@ -336,7 +346,6 @@ URL_LIST = open("url_input.txt", "r", encoding="utf-8").read().splitlines()
 options = Options()
 # options.add_argument("download.default_directory=C:\\Music")
 driver = webdriver.Firefox(options=options,executable_path=".\geckodriver.exe")
-driver.set_window_size(1920, 1080) 
     
 # ziasin_code (Selenium)
 driver.get(URL_ADDRESS)

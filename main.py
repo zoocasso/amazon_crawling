@@ -8,11 +8,11 @@ from datetime import datetime
 import time
 import re
 
-db_connection_str = 'mysql+pymysql://root:vision9551@172.30.1.51/temp'
+db_connection_str = 'mysql+pymysql://root:vision9551@139.150.82.178/kisti_crawl'
 db_connection = create_engine(db_connection_str)
 conn = db_connection.connect()
 
-db = pymysql.connect(host='172.30.1.51', user='root', password='vision9551', db='kisti_crawl', charset='utf8')
+db = pymysql.connect(host='139.150.82.178', user='root', password='vision9551', db='kisti_crawl', charset='utf8')
 cursor = db.cursor()
 
 create_date = str(datetime.now()).split(' ')[0].strip()
@@ -21,38 +21,40 @@ def insert_db(url,asin,product_order,product_info,product_detail,product_feature
     cursor.execute(f"select * from amz_category where url = '{url}'")
     rows = cursor.fetchall()
     level_list = list()
+    
     for row in rows:
         level_list.append(row[0])
         level_list.append(row[1])
         level_list.append(row[2])
         level_list.append(row[3])
 
-    try:
-        product_info_list = list()
-        product_info_dict = dict()
-        product_info_dict['url'] = url
-        product_info_dict["product_key"] = asin
-        product_info_dict["product_idx"] =product_order
-        product_info_dict["create_date"] = create_date
-        product_info_dict["level1"] = level_list[0]
-        product_info_dict["level2"] = level_list[1]
-        product_info_dict["level3"] = level_list[2]
-        product_info_dict["level4"] = level_list[3]
-        product_info_dict["product_name"] = product_info["Product_name"]
-        product_info_dict["product_price"] = product_info["Product_price"]
-        product_info_dict["review_score"] = product_info["totalRatingStar"]
-        product_info_dict["review_number"] = product_info["totalReviewCount"]
-        product_info_dict["5star"] = product_info["5star"]
-        product_info_dict["4star"] = product_info["4star"]
-        product_info_dict["3star"] = product_info["3star"]
-        product_info_dict["2star"] = product_info["2star"]
-        product_info_dict["1star"] = product_info["1star"]
-        
-        product_info_list.append(product_info_dict)
-        product_info_df = pd.DataFrame(product_info_list)
-        product_info_df.to_sql(name='amz_product_info',con=db_connection, if_exists='append', index=False)
-    except:
-        pass
+    # try:
+    product_info_list = list()
+    product_info_dict = dict()
+    product_info_dict['url'] = url
+    product_info_dict["product_key"] = asin
+    product_info_dict["product_idx"] =product_order
+    product_info_dict["create_date"] = create_date
+    product_info_dict["level1"] = level_list[0]
+    product_info_dict["level2"] = level_list[1]
+    product_info_dict["level3"] = level_list[2]
+    product_info_dict["level4"] = level_list[3]
+    product_info_dict["product_name"] = product_info["Product_name"]
+    product_info_dict["product_price"] = product_info["Product_price"]
+    product_info_dict["review_score"] = product_info["totalRatingStar"]
+    product_info_dict["review_number"] = product_info["totalReviewCount"]
+    product_info_dict["5star"] = product_info["5star"]
+    product_info_dict["4star"] = product_info["4star"]
+    product_info_dict["3star"] = product_info["3star"]
+    product_info_dict["2star"] = product_info["2star"]
+    product_info_dict["1star"] = product_info["1star"]
+    
+    product_info_list.append(product_info_dict)
+    product_info_df = pd.DataFrame(product_info_list)
+    print(product_info_df)
+    product_info_df.to_sql(name='amz_product_info',con=db_connection, if_exists='append', index=False)
+    # except:
+    #     pass
 
     try:
         index_1 = 1
